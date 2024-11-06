@@ -96,12 +96,12 @@ def transactionPost(request):
         }
 
         try:
-            response = resquests.post(url, headers, data=content)
+            response = requests.post(url, headers=headers, data=content)
             
             json_response = response.json()
             print(f"Json Response ---> {json_response}")
         except Exception as e:
-            message = f"Unable to reach the Rule Engine!"
+            message = f"Unable to reach the Rule Engine! Error Experienced --> {e}"
             return JsonResponse(
                 {
                         "responseObject": {
