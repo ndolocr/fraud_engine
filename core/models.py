@@ -24,18 +24,18 @@ class Transaction(models.Model):
     remarks = models.CharField(max_length=255, null=True, default="")
     status = models.CharField(max_length=255, default='new', choices=status_choices)
     country_code = models.CharField(max_length=255, null=True, choices=country_code_choices, default=True)
-    # Source Details
-    customer_id = models.CharField(max_length=255, null=True)
+    # Source Details    
     dr_channel = models.CharField(max_length=255, null=True)
-    dr_currency = models.CharField(max_length=255, null=True)    
-    customer_name = models.CharField(max_length=255, null=True)
+    dr_currency = models.CharField(max_length=255, null=True)
+    dr_customer_id = models.CharField(max_length=255, null=True)
+    dr_customer_name = models.CharField(max_length=255, null=True)
     dr_amount = models.DecimalField(max_digits=15, decimal_places=2)
     dr_account = models.CharField(max_length=255, null=True, default="")
-    # Destionation
-    customerId = models.CharField(max_length=255, null=True)
+    # Destionation    
     cr_channel = models.CharField(max_length=255, null=True)
     cr_currency = models.CharField(max_length=255, null=True)
-    customer_name = models.CharField(max_length=255, null=True)
+    cr_customerId = models.CharField(max_length=255, null=True)
+    cr_customer_name = models.CharField(max_length=255, null=True)
     cr_amount = models.DecimalField(max_digits=15, decimal_places=2)
     cr_account = models.CharField(max_length=255, null=True, default="")
     
