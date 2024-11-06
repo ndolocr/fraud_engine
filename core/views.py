@@ -1,3 +1,6 @@
+import requests
+
+from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
 
@@ -8,6 +11,7 @@ from rest_framework.decorators import api_view
 @api_view(["POST"])
 def transactionPost(request):
     if request.method == "POST":
+        data = {}
         cr = request.data.get("cr", None)
         dr = request.data.get("dr", None)
         country_code = request.data.get("countryCode", "")
@@ -42,9 +46,7 @@ def transactionPost(request):
         cr_account = cr["account"]
         cr_currency = cr["currency"]
         cr_customerId = cr["customerId"]
-        cr_customer_name = cr["customerName"]
-        
-        
+        cr_customer_name = cr["customerName"]        
 
         print(" ---------------------------------------------- ")
         print(f"transaction_date -->{transaction_date}")
@@ -69,8 +71,48 @@ def transactionPost(request):
         print(f"cr_account -->{cr_account}")
         print(" ---------------------------------------------- ")
 
+        # Sending Data to Rule Engine
+        url = settings.RULE_ENGINE_URL
+        headers = {"Content-Type": "application/json"}
+        content = {
+            cr_amount: cr_amount,
+            cr_channel: cr_channel,
+            cr_account: cr_account,
+            cr_currency: cr_currency,
+            cr_customerId: cr_customerId,
+            cr_customer_name: cr_customer_name,
 
+            dr_amount: dr_amount,
+            dr_channel: dr_channel,
+            dr_account: dr_account,
+            dr_currency: dr_currency,
+            dr_customer_id: dr_customer_id,
+            dr_customer_name: dr_customer_name,
 
+            country_code: country_code,
+            transaction_id: transaction_id,
+            transaction_date: transaction_date,
+            transaction_type: transaction_type
+        }
+
+        try:
+            response = resquests.post(url, headers, data=content)
+            
+            json_response = response.json()
+            print(f"Json Response ---> {json_response}")
+        except Exception as e:
+            message = f"Unable to reach the Rule Engine!"
+            return JsonResponse(
+                {
+                        "responseObject": {
+                            "code": 0,
+                            'data': message
+                        },
+                        "statusCode": "00",
+                        "successful": True,
+                        "statusMessage": "Success"                        
+                    }
+            )
 
         message = f"SUCCESS!"
         return JsonResponse(
