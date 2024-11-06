@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 # Create your views here.
 
 api_view(["POST"])
-def getTransaction(request):
+def transactionPost(request):
     if request.method == "POST":
         
         message = f"SUCCESS!"
