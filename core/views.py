@@ -75,28 +75,28 @@ def transactionPost(request):
         url = settings.RULE_ENGINE_URL
         headers = {"Content-Type": "application/json"}
         content = {
-            cr_amount: cr_amount,
-            cr_channel: cr_channel,
-            cr_account: cr_account,
-            cr_currency: cr_currency,
-            cr_customerId: cr_customerId,
-            cr_customer_name: cr_customer_name,
+            "cr_amount": cr_amount,
+            "cr_channel": cr_channel,
+            "cr_account": cr_account,
+            "cr_currency": cr_currency,
+            "cr_customerId": cr_customerId,
+            "cr_customer_name": cr_customer_name,
 
-            dr_amount: dr_amount,
-            dr_channel: dr_channel,
-            dr_account: dr_account,
-            dr_currency: dr_currency,
-            dr_customer_id: dr_customer_id,
-            dr_customer_name: dr_customer_name,
+            "dr_amount": dr_amount,
+            "dr_channel": dr_channel,
+            "dr_account": dr_account,
+            "dr_currency": dr_currency,
+            "dr_customer_id": dr_customer_id,
+            "dr_customer_name": dr_customer_name,
 
-            country_code: country_code,
-            transaction_id: transaction_id,
-            transaction_date: transaction_date,
-            transaction_type: transaction_type
+            "country_code": country_code,
+            "transaction_id": transaction_id,
+            "transaction_date": transaction_date,
+            "transaction_type": transaction_type
         }
 
         try:
-            response = requests.post(url, headers=headers, data=content)
+            response = requests.post(url, headers=headers, json=content)
             
             json_response = response.json()
             print(f"Json Response ---> {json_response}")
