@@ -100,6 +100,15 @@ def transactionPost(request):
             
             json_response = response.json()
             print(f"Json Response ---> {json_response}")
+            data = {
+                "cr": request.data.get("cr", None),
+                "dr": request.data.get("dr", None),
+                "country_code": request.data.get("countryCode", ""),
+                "transaction_id": request.data.get("transactionId", ""),
+                "transaction_date": request.data.get("transactionDate", ""),
+                "transaction_type": request.data.get("transactionType", ""),
+                "score": json_response["score"],                
+            }
         except Exception as e:
             message = f"Unable to reach the Rule Engine! Error Experienced --> {e}"
             return JsonResponse(
@@ -119,7 +128,8 @@ def transactionPost(request):
             {
                     "responseObject": {
                         "code": 1,
-                        'data': message
+                        'message': message,
+                        'data': data,
                     },
                     "statusCode": "00",
                     "successful": True,
