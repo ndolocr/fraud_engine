@@ -292,7 +292,8 @@ def transactionPost_v2(request):
                 "transaction_id": request.data.get("transactionId", ""),
                 "transaction_date": request.data.get("transactionDate", ""),
                 "transaction_type": request.data.get("transactionType", ""),
-                "score": json_response["score"],                
+                "score": json_response["score"],
+                "remarks": json_response["remarks"]
             }
         except Exception as e:
             message = f"Unable to reach the Rule Engine! Error Experienced --> {e}"
