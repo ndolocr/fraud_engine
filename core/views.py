@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 from django.conf import settings
 from django.shortcuts import render
@@ -153,6 +154,8 @@ def transactionPost(request):
 @api_view(["POST"])
 def transactionPost_v2(request):
     if request.method == "POST":
+        start_time = datetime.now()
+
         data = {}
         cr = request.data.get("cr", None)
         dr = request.data.get("dr", None)
@@ -203,6 +206,8 @@ def transactionPost_v2(request):
         # Device Details
         ip = deviceDetails["ip"]
         country = deviceDetails["country"]
+
+        # 
 
         print(f"================================================================")
         print()
@@ -295,6 +300,11 @@ def transactionPost_v2(request):
                 "score": json_response["score"],
                 "remarks": json_response["remarks"]
             }
+
+            # Save Request Payload in request table
+            
+            # Save data in table to be viewed by Analysts in transaction table
+
         except Exception as e:
             message = f"Unable to reach the Rule Engine! Error Experienced --> {e}"
             return JsonResponse(

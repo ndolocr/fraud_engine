@@ -128,5 +128,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+KNOWLEDGE_BASE_URL = 'http://127.0.0.1:8001/'
 RULE_ENGINE_URL = 'http://127.0.0.1:8000/transaction/process'
 RULE_ENGINE_V2_URL = 'http://127.0.0.1:8000/transaction/process_v2'
