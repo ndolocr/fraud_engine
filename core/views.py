@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 from django.conf import settings
 from django.shortcuts import render
@@ -153,6 +154,8 @@ def transactionPost(request):
 @api_view(["POST"])
 def transactionPost_v2(request):
     if request.method == "POST":
+        start_time = datetime.now()
+
         data = {}
         cr = request.data.get("cr", None)
         dr = request.data.get("dr", None)
@@ -204,6 +207,8 @@ def transactionPost_v2(request):
         ip = deviceDetails["ip"]
         country = deviceDetails["country"]
 
+        # 
+
         print(f"================================================================")
         print()
         print("--------------------- Data ---------------------")
@@ -245,9 +250,7 @@ def transactionPost_v2(request):
         print(" ---------------------------------------------- ")
         print()
         print(f"================================================================")
-        # Sending Data to Rule Engine
-        url = settings.RULE_ENGINE_V2_URL
-        headers = {"Content-Type": "application/json"}
+        
         content = {
             "bankId": bankId,
             "requestId": requestId,
@@ -281,6 +284,9 @@ def transactionPost_v2(request):
         }
 
         try:
+            # Sending Data to Rule Engine
+            url = settings.RULE_ENGINE_V2_URL
+            headers = {"Content-Type": "application/json"}
             response = requests.post(url, headers=headers, json=content)
             
             json_response = response.json()
@@ -295,6 +301,11 @@ def transactionPost_v2(request):
                 "score": json_response["score"],
                 "remarks": json_response["remarks"]
             }
+
+            # Save Request Payload in request table
+            
+            # Save data in table to be viewed by Analysts in transaction table
+
         except Exception as e:
             message = f"Unable to reach the Rule Engine! Error Experienced --> {e}"
             return JsonResponse(
