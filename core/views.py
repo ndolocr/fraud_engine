@@ -250,9 +250,7 @@ def transactionPost_v2(request):
         print(" ---------------------------------------------- ")
         print()
         print(f"================================================================")
-        # Sending Data to Rule Engine
-        url = settings.RULE_ENGINE_V2_URL
-        headers = {"Content-Type": "application/json"}
+        
         content = {
             "bankId": bankId,
             "requestId": requestId,
@@ -286,6 +284,9 @@ def transactionPost_v2(request):
         }
 
         try:
+            # Sending Data to Rule Engine
+            url = settings.RULE_ENGINE_V2_URL
+            headers = {"Content-Type": "application/json"}
             response = requests.post(url, headers=headers, json=content)
             
             json_response = response.json()
