@@ -360,5 +360,9 @@ def transactionPost_v2(request):
             }
         )
 
+
 def save_request_data(request_json):
-    pass
+    print(f"Type of JSON -->{type(request_json)}")
+    url = settings.SAVE_REQUEST_URL
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(url, headers=headers, json=request_json)
