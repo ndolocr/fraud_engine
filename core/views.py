@@ -302,8 +302,21 @@ def transactionPost_v2(request):
                 "remarks": json_response["remarks"]
             }
 
-            # Save Request Payload in request table
-            
+            # Save Request Payload in request table            
+            request_json = {                
+                "cr_account": cr_account,
+                "dr_account": dr_account,
+                "request_payload": content,
+                "score": json_response["score"],
+                "transaction_time": transactionTime,
+                "decision": json_response["remarks"],
+                "name_space": json_response["name_space"],
+                "response_status": json_response["status"],
+                "response_message": json_response["message"],
+                "response_payload": json.dumps(json_response.dumps),                  
+            }
+
+            save_request_data(request_json)
             # Save data in table to be viewed by Analysts in transaction table
 
         except Exception as e:
@@ -346,3 +359,6 @@ def transactionPost_v2(request):
                 "statusMessage": "Fail"                        
             }
         )
+
+def save_request_data(request_json):
+    pass
