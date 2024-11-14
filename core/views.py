@@ -316,7 +316,8 @@ def transactionPost_v2(request):
                 "response_payload": json.dumps(json_response.dumps),                  
             }
 
-            save_request_data(request_json)
+            save_data = save_request_data(request_json)
+
             # Save data in table to be viewed by Analysts in transaction table
 
         except Exception as e:
@@ -363,6 +364,11 @@ def transactionPost_v2(request):
 
 def save_request_data(request_json):
     print(f"Type of JSON -->{type(request_json)}")
-    url = settings.SAVE_REQUEST_URL
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(url, headers=headers, json=request_json)
+    try:
+        url = settings.SAVE_REQUEST_URL
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(url, headers=headers, json=request_json)
+    except Exception as e:
+        return f"Error on saving Request Data --> {str(e)}"
+    
+    return "SUCCESS!"
