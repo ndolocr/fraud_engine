@@ -302,7 +302,21 @@ def transactionPost_v2(request):
                 "remarks": json_response["remarks"]
             }
 
-            # Save Request Payload in request table            
+            print(f"Data ==> {data}")
+
+            # Save Request Payload in request table  
+            print(f"======== Getting Request JSON ===========")
+            print(f"CR_ACCOUNT ==> {cr_account}")
+            print(f"DR_ACCOUNT ==> {dr_account}") 
+            print(f"REQUEST PAYLOAD ==> {content}")  
+            print(f"SCORE ==> {json_response['score']}")          
+            print(f"TRANSCATION TIME ==> {transactionTime}")  
+            print(f"DECISION ==> {json_response['remarks']}")  
+            print(f"NAME SPACE ==> {json_response['name_space']}")  
+            print(f"RESPONSE STATUS ==> {json_response['status']}")  
+            print(f"RESPONSE MESSAGE ==> {json_response['message']}")  
+            print(f"RESPONSE PAYLOAD ==> {json_response}")  
+            
             request_json = {                
                 "cr_account": cr_account,
                 "dr_account": dr_account,
@@ -313,9 +327,11 @@ def transactionPost_v2(request):
                 "name_space": json_response["name_space"],
                 "response_status": json_response["status"],
                 "response_message": json_response["message"],
-                "response_payload": json.dumps(json_response.dumps),                  
+                "response_payload": json_response,                  
             }
 
+            print(f"Request JSON ===> {request_json}")
+            print(f"Sending data to save request function!")
             save_data = save_request_data(request_json)
 
             # Save data in table to be viewed by Analysts in transaction table
